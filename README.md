@@ -1,18 +1,6 @@
-# ITWS4500-S25-DynamicsDevs
+# ITWS4500-S25-DynamicDevs
 
-# Local Development
-
-Do the following commands **once**
-```shell
-cd frontend
-npm install
-cd ../backend
-npm install
-cd ..
-npm install
-```
-
-To run the frontend and backend server, run 
+# Development
 ```shell
 npm run dev
 ```

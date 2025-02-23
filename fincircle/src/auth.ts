@@ -10,7 +10,7 @@ const authOptions = {
                 email: { label: "Email", type: "text", placeholder: "email"},
                 password: { label: "Password", type: "password", placeholder: "password" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 const { email, password } = credentials as { email: string, password: string };
 
                 if (!email || !password) {

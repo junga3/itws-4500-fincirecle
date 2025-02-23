@@ -1,3 +1,6 @@
 export default async function Page() {
-  return <div>Home</div>;
+  return <>
+    <p>Home</p>
+    <a href="./profile">Profile Page (protected)</a>
+  </>
 }

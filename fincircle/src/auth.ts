@@ -40,7 +40,6 @@ const authOptions = {
             }
         })
     ],
-    // Enable debug messages in the console if you are having problems
     debug: process.env.NODE_ENV === "development",
     secret: process.env.NEXTAUTH_SECRET,
 };

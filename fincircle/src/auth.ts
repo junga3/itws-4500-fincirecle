@@ -18,7 +18,7 @@ const authOptions = {
                 }
 
                 await prisma.$connect();
-                const user = await prisma.user.findFirst({
+                const user = await prisma.user.findUnique({
                     where: {
                         email: email
                     },
@@ -27,6 +27,7 @@ const authOptions = {
                 if (!user) {
                     return null;
                 }
+
                 const isValid = await compare(password, user.hashedPassword);
                 if (!isValid) {
                     return null;

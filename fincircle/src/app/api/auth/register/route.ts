@@ -10,13 +10,19 @@ export const POST = async (req: Request) => {
             return NextResponse.json({ message: "All fields are required" }, { status: 400 });
         }
 
-        const existingUser = await prisma.user.findFirst({
+        const existingUsername = await prisma.user.findUnique({
             where: {
-                email: email,
+                name: name
             },
         });
 
-        if (existingUser) {
+        const existingEmail = await prisma.user.findUnique({
+            where: {
+                email: email
+            },
+        });
+
+        if (existingUsername || existingEmail) {
             return NextResponse.json({ message: "User already exists" }, { status: 400 });
         }
 

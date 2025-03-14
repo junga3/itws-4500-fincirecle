@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",
+    "@tailwindcss/postcss": "^4.0.8",
     "bcryptjs": "^3.0.2",
     "next": "15.1.7",
     "next-auth": "^5.0.0-beta.25",
@@ -20,7 +21,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.3",
     "prisma": "^6.4.1",
+    "tailwindcss": "^4.0.8",
     "typescript": "^5"
   },
   "prisma": {

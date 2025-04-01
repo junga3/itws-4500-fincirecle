@@ -29,7 +29,8 @@ export default function LoginForm() {
         router.push('/profile');
         router.refresh();
       }
-    } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
       setError('Something went wrong. Please try again.');
     } finally {
       setLoading(false);
@@ -85,7 +86,7 @@ export default function LoginForm() {
       </form>
       
       <p className="mt-4 text-center text-gray-600">
-        Don't have an account?{' '}
+        Don&apos;t have an account?&nbsp;
         <a href="/register" className="text-blue-500 hover:underline">
           Register
         </a>

@@ -1,13 +1,12 @@
 
 'use client';
 
-import { signIn, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 
 export default function NavBar() {
-  const { data: session, status } = useSession();
-  const isLoading = status === 'loading';
+  const { data: session } = useSession();
 
   return (
     <nav className="bg-gray-800 p-4">

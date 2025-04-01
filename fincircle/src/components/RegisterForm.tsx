@@ -143,7 +143,7 @@ export default function RegisterForm() {
       </form>
       
       <p className="mt-4 text-center text-gray-600">
-        Already have an account?{' '}
+        Already have an account?&nbsp;
         <a href="/login" className="text-blue-500 hover:underline">
           Login
         </a>

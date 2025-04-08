@@ -1,12 +1,9 @@
-
-'use client';
-
-import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { auth } from '@/auth';
+import SignOut from './SignOut';
 
-export default function NavBar() {
-  const { data: session } = useSession();
+export default async function NavBar() {
+  const session = await auth();
 
   return (
     <nav className="bg-gray-800 p-4">
@@ -25,12 +22,7 @@ export default function NavBar() {
               <Link href="/profile" className="text-gray-300 hover:text-white">
                 Profile
               </Link>
-              <button 
-                onClick={() => signOut({ callbackUrl: '/' })}
-                className="text-gray-300 hover:text-white"
-              >
-                Logout
-              </button>
+              <SignOut />
             </>
           ) : (
             <>

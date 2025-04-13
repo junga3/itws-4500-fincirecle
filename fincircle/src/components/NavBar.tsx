@@ -1,3 +1,4 @@
+// src/components/NavBar.tsx
 import Link from 'next/link';
 import { auth } from '@/auth';
 import SignOut from './SignOut';
@@ -20,7 +21,10 @@ export default async function NavBar() {
           {session ? (
             <>
               <Link href="/profile" className="text-gray-300 hover:text-white">
-                Profile
+                Dashboard
+              </Link>
+              <Link href="/card" className="text-gray-300 hover:text-white">
+                Cards
               </Link>
               <SignOut />
             </>

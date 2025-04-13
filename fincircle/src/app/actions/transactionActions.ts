@@ -47,7 +47,7 @@ export async function deleteTransaction(formData: FormData) {
 
         await prisma.$connect();
 
-        // if emails don't match, check the role of the user
+
         if (userEmail !== signedInUserEmail && signedInUser.user.role !== "ADMIN") {
             return fail("Unauthorized");
         }
@@ -77,14 +77,14 @@ export async function addTransaction(formData: FormData) {
         }
         
         
-        // TODO date if needed
+
         const signedInUserEmail = signedInUser.user.email;
         const description = formData.get("description") as string;
         const amount = parseFloat(formData.get("amount") as string);
         const userEmail = formData.get("userEmail") as string || signedInUserEmail;
         const cardName = formData.get("cardName") as string;
 
-        // if emails don't match, check the role of the user
+
         if (userEmail !== signedInUserEmail && signedInUser.user.role !== "ADMIN") {
             return fail("Unauthorized");
         }

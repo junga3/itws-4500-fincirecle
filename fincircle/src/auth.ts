@@ -1,7 +1,23 @@
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import prisma from "./prisma";
+
+// extend authjs session
+
+enum UserRole {
+    USER = "USER",
+    ADMIN = "ADMIN",
+}
+ 
+declare module "next-auth" {
+    interface User {
+        id?: string;
+        email?: string | null;
+        name?: string | null;
+        role: UserRole;
+    }
+}
 
 const authOptions = {
     providers: [
@@ -37,12 +53,41 @@ const authOptions = {
                     id: user.id,
                     name: user.name,
                     email: user.email,
+                    role: user.role as UserRole,
                 };
             }
         })
     ],
+    pages: {
+        signIn: "/login"
+    },
+    session: {
+        strategy: "jwt" as const,
+    },
+    callbacks: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        async jwt({token, user} : { token: any; user: User | undefined }) {
+            if (user) {
+                token.id = user.id;
+                token.email = user.email;
+                token.role = user.role;
+            }
+            return token;
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        async session({ session, token }: { session: any; token: any }) {
+            return {
+                ...session,
+                user: {
+                    id: token.id,
+                    email: token.email,
+                    role: token.role,
+                }
+            }
+        }
+    },
     debug: process.env.NODE_ENV === "development",
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.AUTH_SECRET,
 };
 
 export const { auth, handlers, signIn, signOut } = NextAuth(authOptions)

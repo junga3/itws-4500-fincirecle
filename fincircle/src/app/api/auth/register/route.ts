@@ -2,7 +2,7 @@ import prisma from "@/prisma";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
-export const POST = async (req: Request) => {
+export async function POST(req: Request): Promise<NextResponse> {
     try {
         const { name, email, password }: { name: string; email: string; password: string } = await req.json();
 
@@ -41,7 +41,7 @@ export const POST = async (req: Request) => {
 
     } catch (error) {
         console.error("Error creating user:", error);
-        return new Response("Server Error", { status: 500 });
+        return NextResponse.json({ message: "Server Error" }, { status: 500 });
     } finally {
         await prisma.$disconnect();
     }

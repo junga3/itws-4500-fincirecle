@@ -26,7 +26,7 @@ export default function LoginForm() {
       if (result?.error) {
         setError('Invalid email or password');
       } else {
-        router.push('/profile');
+        router.push('/dashboard');
         router.refresh();
       }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,12 +1,15 @@
 import Image from 'next/image';
+import { auth } from "@/auth";
 
-export default function HomePage() {
+export default async function HomePage() {
+
+  const session = await auth();
+  const isLoggedIn = !!session?.user;
+
   return (
     <div className="min-h-screen flex flex-col">
-      {}
       <header className="bg-gradient-to-br from-[#1e2939] to-[#1a36b4] py-20">
         <div className="container mx-auto px-4 text-center text-white">
-          {}
           <Image
             src="/logo.svg"
             alt="FinCircle Logo"
@@ -16,24 +19,39 @@ export default function HomePage() {
           />
           <h1 className="text-5xl font-extrabold mb-4">FinCircle</h1>
           <p className="text-xl mb-8">Your Personal Financial Management Tool.</p>
-          <div className="flex justify-center gap-4">
-            <a
-              href="/register"
-              className="bg-white text-blue-600 font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300"
-            >
-              Register
-            </a>
-            <a
-              href="/login"
-              className="border border-white text-white font-semibold py-3 px-8 rounded-full hover:bg-white hover:text-blue-600 transition duration-300"
-            >
-              Login
-            </a>
-          </div>
+          
+
+          {!isLoggedIn && (
+            <div className="flex justify-center gap-4">
+              <a
+                href="/register"
+                className="bg-white text-blue-600 font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300"
+              >
+                Register
+              </a>
+              <a
+                href="/login"
+                className="border border-white text-white font-semibold py-3 px-8 rounded-full hover:bg-white hover:text-blue-600 transition duration-300"
+              >
+                Login
+              </a>
+            </div>
+          )}
+          
+
+          {isLoggedIn && (
+            <div className="flex justify-center gap-4">
+              <a
+                href="/dashboard"
+                className="bg-white text-blue-600 font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300"
+              >
+                Go to Dashboard
+              </a>
+            </div>
+          )}
         </div>
       </header>
 
-      {}
       <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -59,7 +77,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About Section */}
       <section className="py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Why Choose FinCircle?</h2>

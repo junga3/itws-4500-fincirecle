@@ -70,6 +70,7 @@ const authOptions = {
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
+                token.name = user.name;
                 token.role = user.role;
             }
             return token;
@@ -81,6 +82,7 @@ const authOptions = {
                 user: {
                     id: token.id,
                     email: token.email,
+                    name: token.name,
                     role: token.role,
                 }
             }

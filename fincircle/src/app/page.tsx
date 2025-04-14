@@ -42,7 +42,7 @@ export default async function HomePage() {
           {isLoggedIn && (
             <div className="flex justify-center gap-4">
               <a
-                href="/profile"
+                href="/dashboard"
                 className="bg-white text-blue-600 font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300"
               >
                 Go to Dashboard

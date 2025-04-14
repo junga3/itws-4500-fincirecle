@@ -1,53 +1,34 @@
+// src/app/card/page.tsx
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { getCards, registerCard } from '../actions/cardActions';
+import { getCards } from '../actions/cardActions';
+import CardsList from '@/components/CardsList';
+import CardRegistrationForm from '@/components/CardRegistrationForm';
 
-export default async function ProfilePage() {
+export default async function CardPage() {
     const session = await auth();
 
     if(!session || !session.user || !session.user.email) {
-        redirect('/api/auth/signin?callbackUrl=/profile');
+        redirect('/api/auth/signin?callbackUrl=/card');
     }
 
-    const data = await getCards();
-    console.log("Cards data:", data);
+    const cardsResponse = await getCards();
     
     return (
-        <>
-            <form action={async (formData: FormData) => { "use server"; const response = await registerCard(formData); console.log(response); }} method="POST">
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2" htmlFor="userEmail">
-                        User Email
-                    </label>
-                    <input
-                        id="userEmail"
-                        name="userEmail"
-                        type="email"
-                        defaultValue={session.user.email}
-                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                        required
-                    />
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-6">Card Management</h1>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h2 className="text-2xl font-semibold mb-4">Register New Card</h2>
+                    <CardRegistrationForm userEmail={session.user.email} />
                 </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2" htmlFor="cardName">
-                        Card Name
-                    </label>
-                    <input
-                        id="cardName"
-                        name="cardName"
-                        type="text"
-                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                        required
-                    />
+                
+                <div>
+                    <h2 className="text-2xl font-semibold mb-4">Your Cards</h2>
+                    <CardsList cardsResponse={cardsResponse} userEmail={session.user.email} />
                 </div>
-                <button
-                    type="submit"
-                    className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-700"
-                >
-                    Register Card
-                </button>
-
-            </form>
-        </>
+            </div>
+        </div>
     );
 }

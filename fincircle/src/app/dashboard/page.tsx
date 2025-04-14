@@ -1,4 +1,3 @@
-// src/app/profile/page.tsx
 import { auth } from '@/auth';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -9,7 +8,7 @@ export default async function ProfilePage() {
     const session = await auth();
 
     if(!session || !session.user) {
-        redirect('/api/auth/signin?callbackUrl=/profile');
+        redirect('/api/auth/signin?callbackUrl=/dashboard');
     }
 
     const cardsResponse = await getCards();

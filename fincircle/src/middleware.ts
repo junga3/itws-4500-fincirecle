@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
   const isAuthenticated = !!token;
 
   // protected routes
-  const isProtectedRoute = request.nextUrl.pathname.startsWith('/profile');
+  const isProtectedRoute = request.nextUrl.pathname.startsWith('/dashboard');
   const isAuthRoute = request.nextUrl.pathname.startsWith('/login') || 
                      request.nextUrl.pathname.startsWith('/register');
 
@@ -19,9 +19,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  // redirect authenticated users from auth routes to profile
+  // redirect authenticated users from auth routes to dashboard
   if (isAuthRoute && isAuthenticated) {
-    return NextResponse.redirect(new URL('/profile', request.url));
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
   return NextResponse.next();
@@ -29,5 +29,5 @@ export async function middleware(request: NextRequest) {
 
 // specify which routes the middleware should run on
 export const config = {
-  matcher: ['/profile/:path*', '/login', '/register'],
+  matcher: ['/dashboard/:path*', '/login', '/register'],
 };

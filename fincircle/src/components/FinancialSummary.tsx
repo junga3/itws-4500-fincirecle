@@ -16,6 +16,7 @@ interface Transaction {
     description: string;
     timestamp: string;
     cardId: string;
+    cardName?: string;
 }
 
 interface CardWithTransactions extends Card {
@@ -64,15 +65,20 @@ export default function FinancialSummary({ cards }: FinancialSummaryProps) {
                     const response = await getTransactions(formData) as ActionResponse;
                     
                     if (response.status === 'success') {
-                        const transactions = response.data;
-                        const cardBalance = transactions.reduce((sum, t) => sum + t.amount, 0);
+
+                        const transactionsWithCardName = response.data.map(t => ({
+                            ...t,
+                            cardName: card.cardName,
+                        }));
+                        
+                        const cardBalance = transactionsWithCardName.reduce((sum, t) => sum + t.amount, 0);
                         
                         calculatedTotal += cardBalance;
-                        allTransactions = [...allTransactions, ...transactions];
+                        allTransactions = [...allTransactions, ...transactionsWithCardName];
                         
                         cardsWithTransactionsData.push({
                             ...card,
-                            transactions,
+                            transactions: transactionsWithCardName,
                             balance: cardBalance
                         });
                     }
@@ -148,7 +154,9 @@ export default function FinancialSummary({ cards }: FinancialSummaryProps) {
                                 <div key={transaction.id} className="flex justify-between items-center p-2 bg-gray-50 rounded">
                                     <div>
                                         <p className="font-medium">{transaction.description}</p>
-                                        <p className="text-sm text-gray-500">{formattedDate}</p>
+                                        <p className="text-sm text-gray-500">
+                                            {formattedDate} • {transaction.cardName}
+                                        </p>
                                     </div>
                                     <span className={`font-semibold ${transaction.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                                         ${transaction.amount.toFixed(2)}

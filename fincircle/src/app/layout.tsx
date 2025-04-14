@@ -18,11 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="h-full">
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
         <AuthProvider>
           <NavBar />
-          <main className="container mx-auto px-4 py-8">
+          <main className="flex-grow container mx-auto px-4 py-8">
             {children}
           </main>
           <Footer />

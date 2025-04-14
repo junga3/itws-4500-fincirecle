@@ -49,7 +49,7 @@ export async function deleteCard(formData: FormData) {
             return fail("Unauthorized");
         }
 
-        await prisma.card.delete({
+        await prisma.card.deleteMany({
             where: {
                 cardName: cardName,
                 user: {
@@ -79,6 +79,9 @@ export async function registerCard(formData: FormData) {
         const userEmail = formData.get("userEmail") as string || signedInUserEmail;
         const cardName = formData.get("cardName") as string;
 
+
+        console.log("Registering card with:", { cardName, userEmail });
+
         // if emails don't match, check the role of the user
         if (userEmail !== signedInUserEmail && signedInUser.user.role !== "ADMIN") {
             return fail("Unauthorized");
@@ -86,28 +89,44 @@ export async function registerCard(formData: FormData) {
 
         await prisma.$connect();
         // check if card exists
-        const existingCard = await prisma.card.findUnique({
+        const user = await prisma.user.findUnique({
+            where: {
+                email: userEmail,
+            },
+        });
+        
+        if (!user) {
+            return fail("User not found");
+        }
+        
+        const existingCard = await prisma.card.findFirst({
             where: {
                 cardName: cardName,
-                user: {
-                    email: userEmail
-                }
-            }
+                userId: user.id, // use user ID directly
+            },
         });
+        
         if (existingCard) {
             return fail(`Card ${cardName} already exists for ${userEmail}`);
         }
 
+        console.log("Creating card with data:", {
+            cardName,
+            userId: user.id,
+          });
+
+          
         await prisma.card.create({
             data: {
                 cardName: cardName,
                 user: {
                     connect: {
-                        email: userEmail
-                    }
-                }
-            }
+                        id: user.id,
+                    },
+                },
+            },
         });
+        
 
         return success(`Card ${cardName} registered successfully for ${userEmail}`);
     } catch (error) {

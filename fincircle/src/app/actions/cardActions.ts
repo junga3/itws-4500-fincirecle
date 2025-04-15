@@ -30,6 +30,37 @@ export async function getCards() {
     }
 }
 
+export async function getCard(name: string) {
+    try {
+        const signedInUser = await auth();
+        if (!signedInUser || !signedInUser.user?.email) {
+            return fail("Unauthorized");
+        }
+
+        await prisma.$connect();
+
+        const card = await prisma.card.findFirst({
+            where: {
+                cardName: name,
+                user: {
+                    email: signedInUser.user.email
+                }
+            }
+        });
+
+        if (!card) {
+            return fail("Card not found");
+        }
+        
+        return success(card);
+    } catch (error) {
+        console.error("Error fetching card information:", error);
+        return fail("Server Error");
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
 export async function deleteCard(formData: FormData) {
     try {
         const signedInUser = await auth();

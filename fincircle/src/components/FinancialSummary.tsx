@@ -1,4 +1,3 @@
-// src/components/FinancialSummary.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -58,11 +57,8 @@ export default function FinancialSummary({ cards }: FinancialSummaryProps) {
             let calculatedTotal = 0;
             
             for (const card of cards) {
-                const formData = new FormData();
-                formData.append('cardName', card.cardName);
-                
                 try {
-                    const response = await getTransactions(formData) as ActionResponse;
+                    const response = await getTransactions(card.cardName) as ActionResponse;
                     
                     if (response.status === 'success') {
 

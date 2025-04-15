@@ -102,7 +102,7 @@ export default function CardsList({ cardsResponse, userEmail }: CardsListProps) 
                                 href={`/transactions/${encodeURIComponent(card.cardName)}`}
                                 className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
                             >
-                                View Transactions
+                                Add/View Transactions
                             </Link>
                             <button
                                 onClick={() => handleDeleteCard(card.cardName)}

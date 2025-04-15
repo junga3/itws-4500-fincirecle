@@ -41,37 +41,38 @@ export default function CardRegistrationForm({ userEmail }: CardRegistrationForm
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md">
-            {message && (
-                <div className={`mb-4 p-3 rounded ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                    {message.text}
-                </div>
-            )}
+        {message && (
+            <div className={`mb-4 p-3 rounded ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            {message.text}
+            </div>
+        )}
+        
+        <form id="card-form" action={handleSubmit} className="space-y-4">
+            <input type="hidden" name="userEmail" value={userEmail} />
             
-            <form id="card-form" action={handleSubmit} className="space-y-4">
-                <input type="hidden" name="userEmail" value={userEmail} />
-                
-                <div>
-                    <label className="block text-gray-700 mb-2" htmlFor="cardName">
-                        Card Name
-                    </label>
-                    <input
-                        id="cardName"
-                        name="cardName"
-                        type="text"
-                        placeholder="Enter card name (e.g., My Visa Card)"
-                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                        required
-                    />
-                </div>
-                
-                <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-700 disabled:bg-blue-300"
-                >
-                    {isSubmitting ? 'Registering...' : 'Register Card'}
-                </button>
-            </form>
+            <div>
+            <label className="block text-gray-700 mb-2 font-medium" htmlFor="cardName">
+                Card Name
+            </label>
+            <input
+                id="cardName"
+                name="cardName"
+                type="text"
+                placeholder="Enter card name (e.g., My Visa Card)"
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-600"
+                required
+            />
+            </div>
+            
+            <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:bg-gray-900 disabled:bg-gray-400"
+            >
+            {isSubmitting ? 'Registering...' : 'Register Card'}
+            </button>
+        </form>
         </div>
+
     );
 }

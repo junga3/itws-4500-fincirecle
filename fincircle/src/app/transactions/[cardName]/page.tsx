@@ -18,7 +18,9 @@ export default async function TransactionsPage({ params } : { params: Params }) 
     
     const { cardName } = await params;
 
-    const card = await getCard(cardName);
+    const decodedCardName = decodeURIComponent(cardName);
+
+    const card = await getCard(decodedCardName);
 
     if(card.status === 'fail') {
         return (

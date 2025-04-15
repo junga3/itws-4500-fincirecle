@@ -30,7 +30,7 @@ export default async function ProfilePage() {
                     
                     <Link 
                         href="/card" 
-                        className="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                        className="inline-block bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-800"
                     >
                         Manage Cards
                     </Link>

@@ -26,7 +26,7 @@ export async function getTransactions(cardName: string) {
         const transactions = await prisma.transaction.findMany({
             where: {
                 card: {
-                    cardName: cardName,
+                    cardName: decodeURIComponent(cardName),
                     userId: user.id
                 }
             }
@@ -53,7 +53,7 @@ export async function deleteTransaction(formData: FormData) {
         const signedInUserEmail = signedInUser.user.email;
         const transactionId = formData.get("transactionId") as string;
         const userEmail = formData.get("userEmail") as string || signedInUserEmail;
-        const cardName = formData.get("cardName") as string;
+        let cardName = formData.get("cardName") as string;
 
         await prisma.$connect();
 
@@ -72,6 +72,7 @@ export async function deleteTransaction(formData: FormData) {
             return fail("User not found");
         }
         
+        cardName = decodeURIComponent(cardName)
 
         const card = await prisma.card.findUnique({
             where: {
@@ -147,7 +148,7 @@ export async function addTransaction(formData: FormData) {
             card: {
                 connect: {
                 cardName_userId: {
-                    cardName: cardName,
+                    cardName: decodeURIComponent(cardName),
                     userId: user.id
                 }
                 }

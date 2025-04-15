@@ -90,7 +90,7 @@ export default function TransactionForm({ cardName, userEmail }: TransactionForm
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-700 disabled:bg-blue-300"
+                    className="w-full bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:bg-gray-900 disabled:bg-blue-300"
                 >
                     {isSubmitting ? 'Adding...' : 'Add Transaction'}
                 </button>

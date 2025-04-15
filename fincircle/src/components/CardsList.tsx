@@ -100,14 +100,14 @@ export default function CardsList({ cardsResponse, userEmail }: CardsListProps) 
                         <div className="flex space-x-2">
                             <Link 
                                 href={`/transactions/${encodeURIComponent(card.cardName)}`}
-                                className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
+                                className="bg-gray-700 text-white py-1 px-3 rounded hover:bg-gray-800"
                             >
                                 Add/View Transactions
                             </Link>
                             <button
                                 onClick={() => handleDeleteCard(card.cardName)}
                                 disabled={isDeleting === card.cardName}
-                                className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 disabled:bg-red-300"
+                                className="bg-red-700 text-white py-1 px-3 rounded hover:bg-red-800 disabled:bg-red-300"
                             >
                                 {isDeleting === card.cardName ? 'Deleting...' : 'Delete'}
                             </button>

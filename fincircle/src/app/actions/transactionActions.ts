@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import prisma from "@/prisma";
 import { success, fail } from "@/app/actions/index";
 
-export async function getTransactions(formData: FormData) {
+export async function getTransactions(cardName: string) {
     try {
         
         const signedInUser = await auth();
@@ -13,7 +13,6 @@ export async function getTransactions(formData: FormData) {
         }
         
         await prisma.$connect();
-        const cardName = formData.get("cardName") as string;
 
         const user = await prisma.user.findUnique({
             where: { email: signedInUser.user.email },
@@ -26,10 +25,10 @@ export async function getTransactions(formData: FormData) {
         
         const transactions = await prisma.transaction.findMany({
             where: {
-            card: {
-                cardName: cardName,
-                userId: user.id
-            }
+                card: {
+                    cardName: cardName,
+                    userId: user.id
+                }
             }
         });
   

@@ -14,10 +14,6 @@ export default async function NavBar() {
         </Link>
         
         <div className="flex space-x-4">
-          <Link href="/" className="text-gray-300 hover:text-white">
-            Home
-          </Link>
-          
           {session ? (
             <>
               <Link href="/dashboard" className="text-gray-300 hover:text-white">

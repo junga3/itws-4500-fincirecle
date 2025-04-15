@@ -1,18 +1,41 @@
-// src/app/transactions/[cardName]/page.tsx
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import TransactionForm from '@/components/TransactionForm';
 import TransactionsList from '@/components/TransactionsList';
+import { getCard } from '@/app/actions/cardActions';
 
-export default async function TransactionsPage({ params }: { params: { cardName: string } }) {
+type Params = Promise<{
+    cardName: string;
+}>;
+
+export default async function TransactionsPage({ params } : { params: Params }) {
     const session = await auth();
 
     if(!session || !session.user || !session.user.email) {
         redirect('/api/auth/signin?callbackUrl=/transactions');
     }
+    
+    const { cardName } = await params;
 
-    const cardName = decodeURIComponent(params.cardName);
+    const card = await getCard(cardName);
+
+    if(card.status === 'fail') {
+        return (
+            <div className="container mx-auto p-4">
+                <div className="mb-6">
+                <Link href="/card" className="text-blue-500 hover:underline flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Back to Cards
+                </Link>
+            </div>
+                <h1 className="text-3xl font-bold mb-2">Error</h1>
+                <p className="mb-6 text-red-600">Card {cardName} not found</p>
+            </div>
+        )
+    }
     
     return (
         <div className="container mx-auto p-4">

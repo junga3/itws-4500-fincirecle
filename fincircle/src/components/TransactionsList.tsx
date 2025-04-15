@@ -39,10 +39,7 @@ export default function TransactionsList({ cardName, userEmail }: TransactionsLi
     useEffect(() => {
         async function fetchTransactions() {
             try {
-                const formData = new FormData();
-                formData.append('cardName', cardName);
-                
-                const response = await getTransactions(formData) as ActionResponse;
+                const response = await getTransactions(cardName) as ActionResponse;
                 
                 if (response.status === 'success') {
                     setTransactions(response.data);

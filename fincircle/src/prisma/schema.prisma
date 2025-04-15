@@ -25,7 +25,7 @@ model User {
 model Card {
   id           String        @id @default(auto()) @map("_id") @db.ObjectId
   cardName     String
-  user         User          @relation(fields: [userId], references: [id])
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String        @db.ObjectId
   transactions Transaction[]
 
@@ -37,6 +37,6 @@ model Transaction {
   timestamp   DateTime @default(now())
   amount      Float
   description String
-  card        Card     @relation(fields: [cardId], references: [id])
+  card        Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
   cardId      String   @db.ObjectId
 }

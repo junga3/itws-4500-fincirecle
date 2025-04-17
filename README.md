@@ -1,6 +1,6 @@
-# ITWS4500-S25-DynamicDevs
+# FinCircle
+## Straightfoward lightweight finance tracking web app
+### Created for ITWS 4500 - Web Science Development
 
-# Development
-```shell
+install needed packages/libraries
 npm run dev
-```
